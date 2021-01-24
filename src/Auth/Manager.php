@@ -396,6 +396,8 @@ class Manager
                 return false;
             }
 
+            $userArray = @json_decode($userArray, true);
+
             /*
              * Check supplied session/cookie is an array (user id, persist code)
              */
@@ -478,7 +480,7 @@ class Manager
         Session::put($this->sessionKey, $toPersist);
 
         if ($remember) {
-            Cookie::queue(Cookie::forever($this->sessionKey, $toPersist));
+            Cookie::queue(Cookie::forever($this->sessionKey, json_encode($toPersist)));
         }
 
         /*
